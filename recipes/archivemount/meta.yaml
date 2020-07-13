@@ -1,0 +1,51 @@
+{% set name = "archivemount" %}
+{% set version = "0.9.1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://www.cybernoia.de/software/archivemount/archivemount-{{version}}.tar.gz
+  sha256: c529b981cacb19541b48ddafdafb2ede47a40fcaf16c677c1e2cd198b159c5b3
+
+build:
+  skip: True  # [win]
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - autoconf
+    - libarchive
+    - libfuse >=2,<3
+    - make
+  run:
+    - libarchive
+    - libfuse >=2,<3
+
+
+test: 
+  commands:
+    - archivemount --help
+
+
+about:
+  home: https://www.cybernoia.de/software/archivemount.html
+  license: GPL-2.0
+  license_family: GPL
+  # It is strongly encouraged to include a license file in the package,
+  # (even if the license doesn't require it) using the license_file entry.
+  # See https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#license-file
+  license_file: COPYING
+  summary: 'Mount an archive on a filesystem in userspace (FUSE).'
+  description: |
+    Archivemount is a piece of glue code between libarchive
+    (http://people.freebsd.org/~kientzle/libarchive/) and FUSE
+    (http://fuse.sourceforge.net). It can be used to mount a (possibly compressed)
+    archive (as in .tar.gz or .tar.bz2) and use it like an ordinary filesystem.
+  dev_url: https://github.com/cybernoid/archivemount
+
+extra:
+  recipe-maintainers:
+    - rhpvorderman
