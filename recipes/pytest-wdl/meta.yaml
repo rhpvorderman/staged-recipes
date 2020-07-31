@@ -1,0 +1,56 @@
+{% set name = "pytest-wdl" %}
+{% set version = "1.4.0" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: 999252ac65c6f1e6039a6ae95e0c111589bcf802a57922e4eb2637635d487041
+
+build:
+  noarch: python
+  number: 0
+  script: "{{ PYTHON }} -m pip install . -vv"
+
+requirements:
+  host:
+    - miniwdl ==0.6.4
+    - pip
+    - pytest >=5.1,<5,4
+    - pytest-subtests
+    - python >=3.6
+    - setuptools
+    - subby >=0.1.6
+    - xphyle >=4.1.3
+  run:
+    - miniwdl ==0.6.4
+    - pytest >=5.1,<5,4
+    - pytest-subtests
+    - python >=3.6
+    - setuptools
+    - subby >=0.1.6
+    - xphyle >=4.1.3
+
+test:
+  imports:
+    - pytest_wdl
+    - pytest_wdl.data_types
+    - pytest_wdl.executors
+    - pytest_wdl.providers
+
+about:
+  home: "https://github.com/EliLillyCo/pytest-wdl"
+  license: Apache-2.0
+  license_family: APACHE
+  license_file: 
+  summary: "Pytest plugin for testing WDL workflows."
+  doc_url: https://pytest-wdl.readthedocs.io/en/stable/index.html
+  dev_url: "https://github.com/EliLillyCo/pytest-wdl"
+
+extra:
+  recipe-maintainers:
+    - jdidion
+    - rhpvorderman
+
